@@ -15,6 +15,10 @@ int main()
 	atexit(exit_call);
 	switch ( pid = fork() )
 	{
+		case -1:
+		{
+			exit(1);
+		}
 		case 0:
 		{
 			printf("\nIt's child\n");
