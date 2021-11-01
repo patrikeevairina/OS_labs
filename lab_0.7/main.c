@@ -84,6 +84,8 @@ int main(int argc, char *argv[])
 
 		strcpy(archive.fileData, fileData);
 		addToArchive(archive, arg1);
+		if (remove(arg3) != 0)
+			return -1;
 	}
 	else if (strcmp(arg2, "-s") == 0 || strcmp(arg2, "--stat") == 0) 
 	{
@@ -99,8 +101,10 @@ int main(int argc, char *argv[])
 		}
 		fclose(fp);
 	}
+	
 	else if (strcmp(arg2, "-e") == 0 || strcmp(arg2, "--extract") == 0) 
 	{
+		
 		FILE *fp = fopen(arg1, "rb");
 		structArchive f;
 
