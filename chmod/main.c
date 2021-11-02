@@ -5,7 +5,7 @@
 
 int main(int argc, char *argv[]) 
 {
-	char c, *s = argv[1];
+	char *s = argv[1];
 
 	regex_t regex;
 	
@@ -22,9 +22,9 @@ int main(int argc, char *argv[])
 	__mode_t mode = st.st_mode & 07777, newMode = 0;
 	int remove = 0, type = 0;
 	
-	for (int i = 1; (c = s[i]) != '\0'; i++) 
+	for (int i = 1;  s[i] != '\0'; i++) 
 	{
-		switch (c) 
+		switch (s[i]) 
 		{
 			case 'h': printf("Подобие системной утилиты chmod\n"
 				"chmod -h // вывести справку по использованию\n"
