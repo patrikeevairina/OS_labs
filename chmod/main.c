@@ -5,6 +5,8 @@
 
 int main(int argc, char *argv[]) 
 {
+	if (argc == 1)
+		return 1;
 	char *s = argv[1];
 
 	regex_t regex;
@@ -34,7 +36,8 @@ int main(int argc, char *argv[])
 				return 0;
 			case 'g': type = 1; break;
 			case 'o': type = 2; break;
-			case 'r': i == 2 ? remove = 1 : (newMode |= S_IRUSR); break; 
+			case 'r': i == 2 ? remove = 1 : (newMode |= S_IRUSR); break;
+			case 'w': newMode |= S_IWUSR; break; 
 			case 'x': newMode |= S_IXUSR; break;
 		}
 	}
