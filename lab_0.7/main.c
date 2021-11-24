@@ -26,7 +26,7 @@ char *getFileName(char *filePath)
 
 long getFileSize(char *filePath) 
 {
-	FILE *fp1 = fopen(filePath, "rb");
+	FILE *fp1 = fopen(filePath, "rb"); 
 	long prev = ftell(fp1);
 	fseek(fp1, 0L, SEEK_END);
 	long sz = ftell(fp1);
@@ -62,6 +62,13 @@ int main(int argc, char *argv[])
 	} 
 	else if (strcmp(arg2, "-i") == 0 || strcmp(arg2, "--input") == 0) 
 	{
+		FILE *fp;
+		if ((fp = fopen(arg3, "rb")) == NULL)
+		{
+			perror("fopen");
+			return 1;
+		}
+		
 		structArchive archive;
 		struct stat stats;
 
@@ -71,7 +78,6 @@ int main(int argc, char *argv[])
 		archive.mode = stats.st_mode;
 		archive.fileData = (char *) malloc(sizeof(char) * (archive.filesize + 1));
 
-		FILE *fp = fopen(arg3, "rb");
 		char ch;
 		long size = getFileSize(arg3);
 		char *fileData = (char *) malloc(sizeof(char) * size + 1);
@@ -83,7 +89,7 @@ int main(int argc, char *argv[])
 
 		strcpy(archive.fileData, fileData);
 		addToArchive(archive, arg1);
-		if (remove(argv[3]) != 0) return -1;
+		//if (remove(argv[3]) != 0) return -1;
 	}
 	else if (strcmp(arg2, "-s") == 0 || strcmp(arg2, "--stat") == 0) 
 	{
@@ -102,7 +108,13 @@ int main(int argc, char *argv[])
 	else if (strcmp(arg2, "-e") == 0 || strcmp(arg2, "--extract") == 0) 
 	{
 		FILE *fp = fopen(arg1, "rb");
+		if (fp == NULL)
+		{
+			printf("%s is empty or doesn't exist\n", arg1);		
+			return 1;
+		}
 		structArchive f;
+		int flag = 0;
 		while (fread(&f.filesize, sizeof(long), 1, fp)) 
 		{
 			fread(&f.filename, sizeof(char) * 256 + 1, 1, fp);
@@ -118,7 +130,8 @@ int main(int argc, char *argv[])
 				fputs(fileData, fp);
 
 				chmod(filename, f.mode);
-				printf("%s extracted %u\n", filename, f.mode);
+				printf("%s extracted \n", filename);
+				flag = 1;
 			} 
 			else 
 			{
@@ -128,6 +141,8 @@ int main(int argc, char *argv[])
 		fclose(fp);
 		remove(arg1);
 		rename("temp", arg1);
+		if (!flag)
+			printf("%s is not found", arg3);
 	}
 	return 0;
 }
