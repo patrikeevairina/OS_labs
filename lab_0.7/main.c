@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
 			fread(&f.mode, sizeof(unsigned int), 1, fp);
 			f.fileData = (char *) malloc(sizeof(char) * (f.filesize + 1));
 			fread(f.fileData, f.filesize, 1, fp);
-			printf("%s\t%ld\t%u\n", f.filename, f.filesize, f.mode);
+			printf("%s\t%i\n", f.filename, f.filesize);
 		}
 		fclose(fp);
 	}
