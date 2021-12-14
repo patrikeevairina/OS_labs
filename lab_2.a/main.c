@@ -7,7 +7,7 @@
 int main()
 {
 	int fd[2];
-	pid_t pid, child_pid;
+	pid_t pid;
 	time_t t;
 
 	pipe(fd);
