@@ -39,6 +39,7 @@ int main()
 		close(fd[0]);
 		
 		write(fd[1], &pid, sizeof(pid_t));
+		time(&t);
 		write(fd[1], &t, sizeof(time_t));
 		close(fd[1]);
 		printf("Parent: waiting\n");
