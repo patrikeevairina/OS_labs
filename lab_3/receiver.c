@@ -39,7 +39,7 @@ int main()
         time_t buf_time = shm_ptr->time;
         pid_t buf_pid = shm_ptr->pid;
         time_t t = time(NULL);
-        printf("RECEIVER\ntime: %s\npid: %d\nSENDER\ntime: %spid: %d\n", ctime(&buf_time), buf_pid, ctime(&t), getpid());
+        printf("RECEIVER\ntime: %spid: %d\nSENDER\ntime: %spid: %d\n", ctime(&buf_time), buf_pid, ctime(&t), getpid());
         sleep(1);
         shmdt(shm_ptr);
 }
