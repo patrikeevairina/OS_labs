@@ -10,33 +10,41 @@ int main()
 	pid_t pid, child_pid;
 	time_t t;
 
-	if (pid = fork())
+	pipe(fd);
+	switch (pid = fork())
 	{
-		printf("Parent: writing to pipe\n");
-
-		write(fd[1], &child_pid, sizeof(pid_t));
-		time(&t);
-		write(fd[1], &t, sizeof(time_t));
-		
-		printf("Parent: waiting\n");
-		wait(NULL);
-		printf("Parent exiting\n");
+	case -1:
+	{
+		printf("Error\n");
+		return -1;
 	}
-	else
+	case 0:
 	{
 		printf("Child: reading from pipe\n");
+		close(fd[1]);
 		
 		read(fd[0], &pid, sizeof(pid_t));
 		read(fd[0], &t, sizeof(time_t));
-		sleep(1);
-		
-		printf("Parent: pid %d \ttime %s", pid, ctime(&t));
+		close(fd[0]);
+	
+		sleep(5);
+		printf("Parent: pid = %d\t time %s\n", pid, ctime(&t));
 		time(&t);
-		printf("Child: pid %d \ttime %s", child_pid, ctime(&t));
-        
-		printf("Child exiting\n");
+		printf("Child: time %s\n", ctime(&t));
 	}
-	close(fd[0]);
-	close(fd[1]);
+	break;
+	default:
+	{
+		printf("Parent: writing to pipe\n");
+		close(fd[0]);
+		
+		write(fd[1], &pid, sizeof(pid_t));
+		write(fd[1], &t, sizeof(time_t));
+		close(fd[1]);
+		printf("Parent: waiting\n");
+		wait(NULL);
+	}
+	}
+	
 	return 0;
 }
