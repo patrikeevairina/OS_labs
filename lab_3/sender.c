@@ -51,6 +51,7 @@ int main()
                 buf.pid = getpid();
                 *shm_ptr = buf;
                 sleep(2);
+		shmdt(shm_ptr);
         }
-	shmdt(shm_ptr);
+	return 0;
 }
