@@ -27,7 +27,7 @@ int main()
         }
 
         int shm_id;
-        if ((shm_id = shmget(key, sizeof (tp), 0666)) < 0)
+        if ((shm_id = shmget(key, sizeof (tp), IPC_CREAT|0666)) < 0)
         {
                 perror("shmget");
                 return(1);

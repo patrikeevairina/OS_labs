@@ -51,6 +51,6 @@ int main()
 	printf("SENDER \ntime: %spid: %d\nRECEIVER \ntime: %spid: %d", ctime(&shm_ptr->time), shm_ptr->pid, ctime(&t), getpid());
 	semop(sem_id, &unlock, 1);
 	shmdt(shm_ptr);
-
+	shmctl(sh_id, IPC_RMID,NULL);
 	return 0;
 }
