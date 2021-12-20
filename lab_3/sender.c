@@ -36,13 +36,20 @@ int main()
                 return 2;
         }
 
+	struct shmid_ds buf;
+	shmctl(shm_id, IPC_STAT, &buf);
+	if (buf.shm_nattch > 1)
+	{
+		printf("Trying to open second server");
+		return 2;	
+	}
+	
         while(1)
         {
                 struct tp buf;
                 buf.time = time(NULL);
                 buf.pid = getpid();
                 *shm_ptr = buf;
-
                 sleep(2);
         }
 }
