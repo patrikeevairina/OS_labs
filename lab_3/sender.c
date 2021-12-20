@@ -52,4 +52,5 @@ int main()
                 *shm_ptr = buf;
                 sleep(2);
         }
+	shmdt(shm_ptr);
 }
