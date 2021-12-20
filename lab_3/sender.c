@@ -51,7 +51,8 @@ int main()
                 buf.pid = getpid();
                 *shm_ptr = buf;
                 sleep(2);
-		shmdt(shm_ptr);
         }
+	shmdt(shm_ptr);
+	shmctl(shm_id, IPC_RMID, NULL); 
 	return 0;
 }
