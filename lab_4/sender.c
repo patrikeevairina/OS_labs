@@ -27,7 +27,7 @@ int main()
         }
 
         int shm_id;
-        if ((shm_id = shmget(key, sizeof (tp), 0666)) < 0)
+        if ((shm_id = shmget(key, sizeof (tp), IPC_CREAT|0666)) < 0)
         {
                 perror("shmget");
                 return(1);
@@ -63,5 +63,7 @@ int main()
 		*shm_ptr = buf;
 		semop(sem_id, &unlock, 1);
 	}
+	shmdt(shm_ptr);
+	shmctl(shm_id, IPC_RMID, NULL);
 	return 0;
 }
