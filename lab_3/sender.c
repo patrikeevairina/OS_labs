@@ -53,6 +53,6 @@ int main()
                 sleep(2);
         }
 	shmdt(shm_ptr);
-	shmctl(shm_id, IPC_RMID, NULL);
+	shmctl(shm_id, IPC_RMID, NULL); 
 	return 0;
 }

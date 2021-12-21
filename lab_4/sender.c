@@ -63,5 +63,7 @@ int main()
 		*shm_ptr = buf;
 		semop(sem_id, &unlock, 1);
 	}
+	shmdt(shm_ptr);
+	shmctl(shm_id, IPC_RMID, NULL);
 	return 0;
 }
