@@ -26,7 +26,7 @@ int main()
 	}
 	
 	int shm_id;
-	if ((shm_id = shmget(key, sizeof (tp), 0666)) < 0)
+	if ((shm_id = shmget(key, sizeof (tp),IPC_CREAT| 0666)) < 0)
 	{
 		perror("shmget");
 		return(1);
@@ -51,6 +51,6 @@ int main()
 	printf("SENDER \ntime: %spid: %d\nRECEIVER \ntime: %spid: %d", ctime(&shm_ptr->time), shm_ptr->pid, ctime(&t), getpid());
 	semop(sem_id, &unlock, 1);
 	shmdt(shm_ptr);
-	shmctl(sh_id, IPC_RMID,NULL);
+	shmctl(shm_id, IPC_RMID,NULL);
 	return 0;
 }

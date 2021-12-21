@@ -15,7 +15,7 @@ typedef struct tp
 	pid_t pid;
 }tp;
 
-struct sembuf lock = {0,1,0}, unlock = {0,-1,0};
+struct sembuf lock = {0,-1,0}, unlock = {0,1,0};
 
 int main()
 {
